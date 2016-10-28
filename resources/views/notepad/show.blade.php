@@ -8,8 +8,8 @@
 
   <div class="uk-grid">
     <div class="uk-width-medium-1-2 uk-form-horizontal">
-      <label class="uk-form-label">Filename</label>
-      <label class="uk-form-label">{{ urldecode($notepad->name) }}</label>
+      <label class="uk-form-label">Foldername</label>
+      <label class="uk-form-label">{{ urldecode($notepad->name) }} {!! $notepad->password ? "<strong class='uk-text-danger'>(secret)</strong>" : "" !!}</label>
     </div>
     <div class="uk-width-medium-1-2 uk-text-right uk-margin-bottom">
       <div class="uk-form-row">
@@ -26,7 +26,7 @@
       <a href="#addnewfile" data-uk-modal class="uk-button uk-button-success">ADD NEW FILE</a>
     </div>
     <div class="uk-width-medium-1-2 uk-text-right">
-      <a href="#hightlight" class="uk-button uk-button-warning" data-uk-modal>HIGHLIGHT</a>
+      <!--<a href="#hightlight" class="uk-button uk-button-warning" data-uk-modal>HIGHLIGHT</a>-->
     </div>
   </div>
   <ul class="uk-subnav uk-subnav-pill uk-margin-small-top" data-uk-switcher="{connect:'#subnav-pill-content-1'}">
@@ -47,10 +47,23 @@
             <p><code>updated at: {{ $filecode->updated_at }}</code></p>
           </div>
         </div>
-        <input class="uk-width-1-1" name="data[{{ $filecode->id }}][filename]" id="filename" placeholder="Filename" value="{{ urldecode($filecode->name) }}">
-        <textarea class="filecontent" name="data[{{ $filecode->id }}][filecontent]" style="width: 100%" rows="20">{{ urldecode($filecode->content) }}</textarea>
+        <div class="uk-grid" style="margin-top: 0px">
+          <div class="uk-width-9-10">
+            <input class="uk-width-1-1" name="data[{{ $filecode->id }}][filename]" id="filename" placeholder="Filename" value="{{ urldecode($filecode->name) }}">
+          </div>
+          <div class="uk-width-1-10 uk-padding-remove uk-text-right">
+            <a href="{{ url('filecode').'/delete/'.$filecode->hash }}" class="uk-button uk-button-danger" onclick="return confirm('Are you sure you want to delete file {{ urldecode($filecode->name) }} ?');"><i class="uk-icon uk-icon-medium uk-icon-trash-o"></i></a>
+          </div>
+        </div>
+        <div class="uk-position-relative">
+          <div class="uk-position-top-right uk-margin-small-top uk-margin-small-right" style="z-index: 999">
+            <a class="uk-button uk-button-warning highlight" target="_blank" href="{{ url('highlight').'/readfile?style=default&language=&hash='.$filecode->hash }}">HIGHTLIGHT</a>
+          </div>
+          <textarea class="filecontent" name="data[{{ $filecode->id }}][filecontent]" style="width: 100%" rows="20">{{ urldecode($filecode->content) }}</textarea>
+        </div>
         <input type="hidden" value="{{ $filecode->id }}" name="data[{{ $filecode->id }}][fileid]">
         <input type="hidden" value="{{ $notepad->id }}" name="data[{{ $filecode->id }}][notepadid]">
+        <input type="hidden" value="{{ $filecode->updated_at }}" name="data[{{ $filecode->id }}][updated_at]">
       </li>
       @endforeach
     </ul>
@@ -96,7 +109,7 @@
           <input type="hidden" name="notepadid" value="{{ $notepad->id }}">
           <input type="hidden" name="notepadname" value="{{ $notepad->name }}">
           <div class="uk-margin uk-text-center">
-            <button type="submit" class="uk-button uk-button-primary">
+            <button type="submit" class="uk-button uk-button-primary addnewfile">
               <i class="uk-icon uk-icon-expand"></i> Create
             </button>
           </div>
@@ -106,7 +119,7 @@
   </div>
 </div>
 
-<div id="hightlight" class="uk-modal">
+<!--<div id="hightlight" class="uk-modal">
   <div class="uk-modal-dialog">
     <a class="uk-modal-close uk-close"></a>
     <div class="uk-panel uk-container uk-container-center">
@@ -143,5 +156,5 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->
 @endsection

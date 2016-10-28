@@ -27,11 +27,11 @@
             </label>
           </form>
         </td>
-        <td><a href="{{ url('/'.$notepad->name) }}"><i class="uk-icon uk-icon-medium uk-icon-search-plus"></i></a></td>
+        <td><a href="{{ url('/'.$notepad->name) }}"><i class="uk-icon uk-icon-medium uk-icon-eye"></i></a></td>
         <td>
           <form name="formDeleteNotepad">
             {{ csrf_field() }}
-            <a class="deletenotepad" id="{{ $notepad->id }}"><i class="uk-icon uk-icon-medium uk-icon-remove"></i></a>
+            <a class="deletenotepad" id="{{ $notepad->id }}"><i class="uk-icon uk-icon-medium uk-icon-trash-o"></i></a>
           </form>
         </td>
       </tr>

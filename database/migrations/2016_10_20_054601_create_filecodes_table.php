@@ -17,6 +17,7 @@ class CreateFilecodesTable extends Migration {
       $table->string('name')->nullable();
       $table->text('content')->nullable();
       $table->integer('notepad_id')->nullable();
+      $table->string('hash');
       $table->timestamps();
     });
   }

@@ -12,6 +12,8 @@ Route::put("/{id}", "NotepadController@update");
 
 Route::resource("/filecode", "FilecodeController");
 
+Route::get("/filecode/delete/{hash}", "FilecodeController@destroy");
+
 //Route::get("/{notepadname}/{filename}", "FilecodeController@show");
 
 Route::get("/{name}", "NotepadController@show");

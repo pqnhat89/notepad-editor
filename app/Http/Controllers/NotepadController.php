@@ -10,6 +10,7 @@ use App\Filecode;
 use Illuminate\Support\Facades\DB;
 use Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class NotepadController extends Controller {
 
@@ -62,6 +63,8 @@ class NotepadController extends Controller {
       $filecode->content = urlencode($request->filecontent);
     }
     $filecode->notepad_id = $new_notepad->id;
+    $filecode->hash = str_random(40);
+//    $filecode->hash = Hash::make(str_random(40));
     $filecode->save();
 
     return redirect(url('/') . '/' . $request->notepadname);
@@ -77,35 +80,21 @@ class NotepadController extends Controller {
     $notepad = DB::table('notepads')->where('name', urlencode($name))->first();
 
     if (!$notepad) {
-
-      $create_notepad = new Notepad;
-      $create_notepad->name = urlencode($name);
-      if (isset(Auth::user()->id)) {
-        $create_notepad->user_id = Auth::user()->id;
-      }
-      $create_notepad->save();
-
-      $new_notepad = DB::table('notepads')->where('name', urlencode($name))->first();
-
-      $create_filecode = new Filecode;
-      $create_filecode->name = 'New Text Document.txt';
-      $create_filecode->notepad_id = $new_notepad->id;
-      $create_filecode->save();
-
-      return redirect(url('/') . '/' . $name);
+      return view('errors/error', array('error' => 'FOLDER NOT AVAILABLE'));
     }
 
     $filecodes = DB::table('filecodes')->where('notepad_id', $notepad->id)->get();
 
-    if (count($filecodes) == 0) {
-      $create_filecode = new Filecode;
-      $create_filecode->name = 'New Text Document.txt';
-      $create_filecode->notepad_id = $notepad->id;
-      $create_filecode->save();
-    }
+//    if (count($filecodes) == 0) {
+//      $create_filecode = new Filecode;
+//      $create_filecode->name = 'New Text Document.txt';
+//      $create_filecode->notepad_id = $notepad->id;
+//      $create_filecode->hash = str_random(40);
+//      $create_filecode->save();
+//    }
 
     if ($notepad->lock == "ON") {
-      return view('notepad/inputpw', array('alert' => 'FILE LOCKED, PLEASE TRY AGAIN LATER !', 'name' => $name, 'lock' => 'ON'));
+      return view('errors/error', array('error' => 'FILE LOCKED, PLEASE TRY AGAIN LATER !'));
     }
 
     if ($request->filepw) {

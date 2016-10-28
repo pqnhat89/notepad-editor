@@ -49,6 +49,8 @@ class FilecodeController extends Controller {
     if ($request->notepadid) {
       $filecode->notepad_id = $request->notepadid;
     }
+//    $filecode->hash = Hash::make($request->filename);
+    $filecode->hash = str_random(40);
     $filecode->save();
     return redirect(url('/') . '/' . $request->notepadname);
   }
@@ -61,11 +63,11 @@ class FilecodeController extends Controller {
    */
   public function show(FilecodeRequest $request, $id) {
 
-    $filecode = DB::table('filecodes')->where('id', $id)->first();
+    $filecode = DB::table('filecodes')->where('hash', $id)->first();
     $notepad = DB::table('notepads')->where('id', $filecode->notepad_id)->first();
 
     if ($notepad->lock == "ON") {
-      return view('filecode/show', array('style' => $request->style, 'lock' => 'ON', 'alert' => 'FILE LOCKED, PLEASE TRY AGAIN LATER !'));
+      return view('errors/error', array('error' => 'FILE LOCKED, PLEASE TRY AGAIN LATER !'));
     } else {
       if ($request->filepw) {
         if ($notepad->password == $request->filepw) {
@@ -110,6 +112,11 @@ class FilecodeController extends Controller {
       foreach ($request->data as $data) {
 
         $filecode = Filecode::find($data['fileid']);
+
+        if ($filecode->updated_at != $data['updated_at']) {
+          return 'FALSE';
+        }
+
         if ($data['filename']) {
           $filecode->name = urlencode($data['filename']);
         }
@@ -127,8 +134,9 @@ class FilecodeController extends Controller {
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id) {
-    //
+  public function destroy($hash) {
+    DB::table('filecodes')->where('hash', $hash)->delete();
+    return back();
   }
 
   public function search(FilecodeRequest $request) {
@@ -145,11 +153,16 @@ class FilecodeController extends Controller {
   }
 
   public function highlight(NotepadRequest $request) {
-    $filecode = DB::table('filecodes')->where('id', $request->fileid)->first();
+    $filecode = DB::table('filecodes')->where('hash', $request->hash)->first();
+
+    if (count($filecode) == 0) {
+      return view('errors/error', array('error' => 'FILE NOT AVAILABLE, PLEASE RECHECK'));
+    }
+
     $notepad = DB::table('notepads')->where('id', $filecode->notepad_id)->first();
 
     if ($notepad->lock == "ON") {
-      return view('filecode/show', array('style' => $request->style, 'lock' => 'ON', 'alert' => 'FILE LOCKED, PLEASE TRY AGAIN LATER !'));
+      return view('errors/error', array('error' => 'FILE LOCKED, PLEASE TRY AGAIN LATER !'));
     }
 
     if ($request->filepw) {

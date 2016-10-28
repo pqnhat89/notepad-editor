@@ -24,6 +24,7 @@
         color: #fff!important;
       }
       body {
+        background-image: linear-gradient(180deg, rgba(255,255,255,0) 30%, #fff),linear-gradient(70deg, #e0f1ff 32%, #fffae3);
         font-family: 'Lato';
       }
 
@@ -54,8 +55,8 @@
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
           <!-- Left Side Of Navbar -->
           <ul class="nav navbar-nav">
-            <li><a href="#filenormal" data-uk-modal>Create Normal File</a></li>
-            <li><a href="#filesecret" data-uk-modal>Create Secret File</a></li>
+            <!--            <li><a href="#filenormal" data-uk-modal>Create Normal File</a></li>
+                        <li><a href="#filesecret" data-uk-modal>Create Secret File</a></li>-->
           </ul>
 
           <!-- Right Side Of Navbar -->
@@ -125,14 +126,19 @@
     <script type="text/javascript">
       $(document).ready(function () {
 
-        $('.filesubmit').on('click', function () {
+        $('.filesubmit, .highlight, .addnewfile').on('click', function () {
           var data = $('.formShow').serializeArray();
           var url = "{{ url('/filecode') }}/fileupdate";
           $.ajax({
             url: url,
             type: 'PUT',
             cache: false,
-            data: data
+            data: data,
+            success: function (status) {
+              if (status=="FALSE"){
+                alert("Data on the server has been changed by another. Please backup data and refresh this page.");
+              }
+            }
           });
         });
 
@@ -181,53 +187,53 @@
 
       });
     </script>
-    <div id="filesecret" class="uk-modal">
-      <div class="uk-modal-dialog">
-        <a class="uk-modal-close uk-close"></a>
-        <div class="uk-panel uk-container uk-container-center">
-          <div class="uk-panel-title">Create Secret File</div>
-          <div class="uk-panel uk-container uk-container-center">
-            <form class="uk-form uk-form-horizontal" role="form" method="POST" action="{{ url('/') }}">
-              {{ csrf_field() }}
-              <div class="uk-form-row">
-                <label class="uk-form-label" for="#notepadname">Filename <strong class="uk-text-danger">*</strong></label>
-                <input name="notepadname" value="{{ $rand }}" required="">
+    <!--    <div id="filesecret" class="uk-modal">
+          <div class="uk-modal-dialog">
+            <a class="uk-modal-close uk-close"></a>
+            <div class="uk-panel uk-container uk-container-center">
+              <div class="uk-panel-title">Create Secret File</div>
+              <div class="uk-panel uk-container uk-container-center">
+                <form class="uk-form uk-form-horizontal" role="form" method="POST" action="{{ url('/') }}">
+                  {{ csrf_field() }}
+                  <div class="uk-form-row">
+                    <label class="uk-form-label" for="#notepadname">Filename <strong class="uk-text-danger">*</strong></label>
+                    <input name="notepadname" value="{{ $rand }}" required="">
+                  </div>
+                  <div class="uk-form-row">
+                    <label class="uk-form-label" for="#notepadpw">Password <strong class="uk-text-danger">*</strong></label>
+                    <input name="notepadpw" value="" required="">
+                  </div>
+                  <div class="uk-margin uk-text-center">
+                    <button type="submit" class="uk-button uk-button-primary">
+                      <i class="uk-icon uk-icon-expand"></i> Create
+                    </button>
+                  </div>
+                </form>
               </div>
-              <div class="uk-form-row">
-                <label class="uk-form-label" for="#notepadpw">Password <strong class="uk-text-danger">*</strong></label>
-                <input name="notepadpw" value="" required="">
-              </div>
-              <div class="uk-margin uk-text-center">
-                <button type="submit" class="uk-button uk-button-primary">
-                  <i class="uk-icon uk-icon-expand"></i> Create
-                </button>
-              </div>
-            </form>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div id="filenormal" class="uk-modal">
-      <div class="uk-modal-dialog">
-        <a class="uk-modal-close uk-close"></a>
-        <div class="uk-panel uk-container uk-container-center">
-          <div class="uk-panel-title">Create Normal File</div>
-          <div class="uk-panel uk-container uk-container-center">
-            <form class="uk-form uk-form-horizontal" role="form" method="POST" action="{{ url('/') }}">
-              {{ csrf_field() }}
-              <div class="uk-form-row">
-                <label class="uk-form-label" for="#notepadname">Filename <strong class="uk-text-danger">*</strong></label>
-                <input name="notepadname" value="{{ $rand }}">
+        </div>-->
+    <!--    <div id="filenormal" class="uk-modal">
+          <div class="uk-modal-dialog">
+            <a class="uk-modal-close uk-close"></a>
+            <div class="uk-panel uk-container uk-container-center">
+              <div class="uk-panel-title">Create Normal File</div>
+              <div class="uk-panel uk-container uk-container-center">
+                <form class="uk-form uk-form-horizontal" role="form" method="POST" action="{{ url('/') }}">
+                  {{ csrf_field() }}
+                  <div class="uk-form-row">
+                    <label class="uk-form-label" for="#notepadname">Filename <strong class="uk-text-danger">*</strong></label>
+                    <input name="notepadname" value="{{ $rand }}">
+                  </div>
+                  <div class="uk-margin uk-text-center">
+                    <button type="submit" class="uk-button uk-button-primary">
+                      <i class="uk-icon uk-icon-expand"></i> Create
+                    </button>
+                  </div>
+                </form>
               </div>
-              <div class="uk-margin uk-text-center">
-                <button type="submit" class="uk-button uk-button-primary">
-                  <i class="uk-icon uk-icon-expand"></i> Create
-                </button>
-              </div>
-            </form>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </div>-->
   </body>
 </html>
