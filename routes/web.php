@@ -1,45 +1,37 @@
 <?php
 
-Auth::routes();
+Route::group(['middleware' => ['web']], function () {
 
-Route::get("/home", "NotepadController@index");
+  Auth::routes();
 
-Route::resource("/", "NotepadController");
+  Route::get("/home", "NotepadController@index");
 
-Route::delete("/{id}", "NotepadController@destroy");
+  Route::resource("/", "NotepadController");
 
-Route::put("/{id}", "NotepadController@update");
+  Route::delete("/{id}", "NotepadController@destroy");
 
-Route::resource("/filecode", "FilecodeController");
+  Route::put("/{id}", "NotepadController@update");
 
-Route::get("/filecode/delete/{hash}", "FilecodeController@destroy");
+  Route::resource("/filecode", "FilecodeController");
 
-//Route::get("/{notepadname}/{filename}", "FilecodeController@show");
+  Route::get("/filecode/delete/{hash}", "FilecodeController@destroy");
 
-Route::get("/{name}", "NotepadController@show");
-Route::post("/{name}", "NotepadController@show");
+  Route::get("/{name}", "NotepadController@show");
+  Route::post("/{name}", "NotepadController@show");
 
-Route::post("/createfile", "NotepadController@createfile");
+  Route::post("/createfile", "NotepadController@createfile");
 
-Route::post("/checkpw/{name}", "NotepadController@checkpw");
+  Route::post("/checkpw/{name}", "NotepadController@checkpw");
 
-Route::get("/highlight/readfile", "FilecodeController@highlight");
-Route::post("/highlight/readfile", "FilecodeController@highlight");
+  Route::get("/highlight/readfile", "FilecodeController@highlight");
+  Route::post("/highlight/readfile", "FilecodeController@highlight");
 
-Route::get("/myfile/{name}", "NotepadController@myfile");
+  Route::get("/myfile/{name}", "NotepadController@myfile");
 
-Route::get("/search/s", "FilecodeController@search");
+  Route::get("/search/s", "FilecodeController@search");
 
-Route::get("/readfile/{id}", "FilecodeController@show");
-Route::post("/readfile/{id}", "FilecodeController@show");
+  Route::get("/readfile/{id}", "FilecodeController@show");
+  Route::post("/readfile/{id}", "FilecodeController@show");
 
-Route::get("/savefile/{id}", "FilecodeController@savefile");
-
-//Route::get("/highlight/{name}", function() {
-//  return action('FilecodeController@highlight', array('url' => url()->full()));
-//});
-
-
-
-//Route::post("/{name}", "NotepadController@showsecret");
-//Route::get("/myfile/{name}", "NotepadController@myfile");
+  Route::get("/savefile/{id}", "FilecodeController@savefile");
+});

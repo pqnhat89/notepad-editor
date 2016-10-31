@@ -135,7 +135,7 @@
             cache: false,
             data: data,
             success: function (status) {
-              if (status=="FALSE"){
+              if (status == "FALSE") {
                 alert("Data on the server has been changed by another. Please backup data and refresh this page.");
               }
             }
@@ -187,53 +187,5 @@
 
       });
     </script>
-    <!--    <div id="filesecret" class="uk-modal">
-          <div class="uk-modal-dialog">
-            <a class="uk-modal-close uk-close"></a>
-            <div class="uk-panel uk-container uk-container-center">
-              <div class="uk-panel-title">Create Secret File</div>
-              <div class="uk-panel uk-container uk-container-center">
-                <form class="uk-form uk-form-horizontal" role="form" method="POST" action="{{ url('/') }}">
-                  {{ csrf_field() }}
-                  <div class="uk-form-row">
-                    <label class="uk-form-label" for="#notepadname">Filename <strong class="uk-text-danger">*</strong></label>
-                    <input name="notepadname" value="{{ $rand }}" required="">
-                  </div>
-                  <div class="uk-form-row">
-                    <label class="uk-form-label" for="#notepadpw">Password <strong class="uk-text-danger">*</strong></label>
-                    <input name="notepadpw" value="" required="">
-                  </div>
-                  <div class="uk-margin uk-text-center">
-                    <button type="submit" class="uk-button uk-button-primary">
-                      <i class="uk-icon uk-icon-expand"></i> Create
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>-->
-    <!--    <div id="filenormal" class="uk-modal">
-          <div class="uk-modal-dialog">
-            <a class="uk-modal-close uk-close"></a>
-            <div class="uk-panel uk-container uk-container-center">
-              <div class="uk-panel-title">Create Normal File</div>
-              <div class="uk-panel uk-container uk-container-center">
-                <form class="uk-form uk-form-horizontal" role="form" method="POST" action="{{ url('/') }}">
-                  {{ csrf_field() }}
-                  <div class="uk-form-row">
-                    <label class="uk-form-label" for="#notepadname">Filename <strong class="uk-text-danger">*</strong></label>
-                    <input name="notepadname" value="{{ $rand }}">
-                  </div>
-                  <div class="uk-margin uk-text-center">
-                    <button type="submit" class="uk-button uk-button-primary">
-                      <i class="uk-icon uk-icon-expand"></i> Create
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>-->
   </body>
 </html>

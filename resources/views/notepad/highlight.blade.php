@@ -24,7 +24,7 @@
           </select>
         </div>
         <input type="hidden" name="language" value="{{ $language }}">
-        <input type="hidden" name="fileid" value="{{ $filecode->id }}">
+        <input type="hidden" name="hash" value="{{ $filecode->hash }}">
         <div class="uk-form-row uk-margin-small-top uk-margin-small-bottom">
           <label>Font-size</label>
           <a class="text-height-up"><img width="30" src="/assets/img/up_button.png"></a>

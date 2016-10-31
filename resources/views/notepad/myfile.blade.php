@@ -16,7 +16,7 @@
       @if (count($notepads)>0)
       @foreach ($notepads as $notepad)
       <tr>
-        <td>{{ $notepad->name }}</td>
+        <td>{{ $notepad->name }} {!! $notepad->password ? "<strong class='uk-text-danger'>(secret)</strong>" : "" !!}</td>
         <td>
           <form id="formLock" name="formLock">
             <?php $check = $notepad->lock == "ON" ? "checked" : "" ?>

@@ -52,11 +52,11 @@
             <input class="uk-width-1-1" name="data[{{ $filecode->id }}][filename]" id="filename" placeholder="Filename" value="{{ urldecode($filecode->name) }}">
           </div>
           <div class="uk-width-1-10 uk-padding-remove uk-text-right">
-            <a href="{{ url('filecode').'/delete/'.$filecode->hash }}" class="uk-button uk-button-danger" onclick="return confirm('Are you sure you want to delete file {{ urldecode($filecode->name) }} ?');"><i class="uk-icon uk-icon-medium uk-icon-trash-o"></i></a>
+            <a href="{{ url('filecode').'/delete/'.$filecode->hash }}" class="uk-button uk-button-danger" onclick="return confirm('Are you sure you want to delete file {{ '"'.urldecode($filecode->name).'"' }} ?');"><i class="uk-icon uk-icon-medium uk-icon-trash-o"></i></a>
           </div>
         </div>
         <div class="uk-position-relative">
-          <div class="uk-position-top-right uk-margin-small-top uk-margin-small-right" style="z-index: 999">
+          <div class="uk-position-top-right uk-margin-small-top uk-margin-small-right" style="z-index: 999; right: 18px">
             <a class="uk-button uk-button-warning highlight" target="_blank" href="{{ url('highlight').'/readfile?style=default&language=&hash='.$filecode->hash }}">HIGHTLIGHT</a>
           </div>
           <textarea class="filecontent" name="data[{{ $filecode->id }}][filecontent]" style="width: 100%" rows="20">{{ urldecode($filecode->content) }}</textarea>
@@ -87,7 +87,7 @@
     </div>
   </form>
   @endif
-
+  
 </div>
 
 <div id="addnewfile" class="uk-modal">
@@ -118,43 +118,4 @@
     </div>
   </div>
 </div>
-
-<!--<div id="hightlight" class="uk-modal">
-  <div class="uk-modal-dialog">
-    <a class="uk-modal-close uk-close"></a>
-    <div class="uk-panel uk-container uk-container-center">
-      <div class="uk-panel-title">Create Highlight</div>
-      <div class="uk-panel uk-container uk-container-center">
-        <form class="uk-form uk-form-horizontal" method="GET" action="{{ url('/highlight').'/readfile' }}">
-          <div class="uk-form-row">
-            <label class="uk-form-label">Filename</label>
-            <label class="uk-form-label">{{ $notepad->name }}</label>
-          </div>
-          <div class="uk-form-row">
-            <label class="uk-form-label">Choose File</label>
-            <select name="fileid">
-              @foreach ($filecodes as $filecode)
-              <option value="{{ $filecode->id }}">{{ urldecode($filecode->name) }}</option>
-              @endforeach
-            </select>
-          </div>
-          <div class="uk-form-row">
-            <label class="uk-form-label">Style</label>
-            <select name="style">
-              @foreach ($styles as $style)
-              <option value="{{ $style }}">{{ $style }}</option>
-              @endforeach
-            </select>
-          </div>
-          <div class="uk-form-row">
-            <label class="uk-form-label">Language : </label>
-            <input type="text" name="language" placeholder="css, html, php, ...">
-            <p class="uk-text-small">null = auto detect</p>
-          </div>
-          <button class="uk-button uk-button-danger uk-width-1-1 uk-margin-top" type="submit" formtarget="_blank">highlight</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>-->
 @endsection
